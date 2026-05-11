@@ -1,7 +1,19 @@
 import time  #importa la librería time que permite medir el tiempo real
+import logging #esto me va a permitir generar el archivos de logs para registrar los diferentes eventos del sistema.
 from datetime import datetime #esta libreria la quiero porque decidí guardar los registros con fecha y hora humana.
 
-def calculate_fare(seconds_stopped, seconds_moving): #recibe como datos cuanto estuvo  el taxi parado y cuanto en movimiento
+logging.basicConfig(
+    filename='taximeter.log',
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(message)s'
+    ) 
+"""
+configura el logging para que guarde los eventos en un archivo llamado taximeter.log con un formato específico que incluye la fecha y hora.
+Decidí poner primero fecha, hora, tipo de log, y luego el mensaje por si luego se quieren analizar los logs, que haya mayor trazabilidad y posibilidad de filtrado
+Al llamar al nivel info, ya registra los niveles: error, warning y critical. Solo quedan descartados los debug que no me interesa registrar en este caso.
+"""
+
+def calculate_fare(seconds_stopped, seconds_moving):
     """
     En el nivel intermedio vamos a crear una variable para los precios porque por si un día cambian sea más fácil de modificar.
     """
@@ -107,7 +119,6 @@ def taximeter(): #esta es la función más importante del programa. muestra mens
 
         else:
             print("Unknown command. Please use 'start', 'stop', 'move', 'finish', or 'exit'.")
-
 
 if __name__ == "__main__": #solo ejecuta esto si el archivo fue lanzado directamente, no si fue importado como módulo
     taximeter()
