@@ -22,7 +22,7 @@ def calculate_fare(seconds_stopped, seconds_moving):
     fare= seconds_stopped * stopped_rate + seconds_moving * moving_rate #calcula el precio llamando a las variables
     return fare
 
-def save_trip_history(trip_data):
+def save_trip_history(trip_data, filename="trip_history.txt"):
     """ 
     Hice esta función auxiliar para que el código no me quede tan extenso en la función taximeter. Lo que hace es definir el formato del registro delviaje y
     guardarlo en un archivo de texto. El registro incluye la fecha y hora de inicio y fin del viaje, el tiempo parado, el tiempo en movimiento y la tarifa total.
@@ -33,7 +33,7 @@ def save_trip_history(trip_data):
 
     trip_record = f"START: {formatted_start} | END: {formatted_end} | STOPPED: {trip_data['stopped_time']:.1f}s | MOVING: {trip_data['moving_time']:.1f}s | FARE: €{trip_data['total_fare']:.2f}\n"
 
-    with open("trip_history.txt", "a") as file:
+    with open(filename, "a", encoding="utf-8") as file: #el encoding utf-8 es para solucionar el problema que tengo en el símbolo de euros
         file.write(trip_record) #primero le doy formato y después recién lo guardo por si se produce un error, que no afecte al archivo y para facilitar el debugueo.
 
 def taximeter(): #esta es la función más importante del programa. muestra mensajes, recibe comandos y calcula los tiempos.
