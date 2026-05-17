@@ -73,6 +73,19 @@ class DigitalTaximeter:
 
         return trip_data
 
+def authenticate(): #función para autenticación con un maxímo de tres intentos. 
+    password = "p7taximetro"
+    attempts = 3
+    while attempts > 0:
+        user_input = input("Enter password to access the taximeter: ")
+        if user_input == password:
+            print("Authentication successful. Welcome!")
+            return True
+        else:
+            attempts -= 1
+            print(f"Incorrect password. {attempts} attempts remaining.")
+    return False
+
 def run_taximeter():
     print("welcome to the F5 Taximeter!")
     print("Available commands: 'start', 'stop', 'move', 'finish', 'exit'\n")
@@ -134,4 +147,7 @@ def save_trip_history(trip_data, filename="trip_history.txt"):
         file.write(trip_record)
 
 if __name__ == "__main__":
-    run_taximeter()
+    if authenticate():
+        run_taximeter()
+    else:
+        print("Access denied.")
